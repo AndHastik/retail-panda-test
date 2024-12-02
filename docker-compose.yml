@@ -2,8 +2,8 @@ version: '3.5'
 
 services:
   # Web app
-  tariffcomparisonapp:
-    container_name: tariff-comparison-app
+  panda_retail_app:
+    container_name: panda-retail-app
     build:
       context: .
       dockerfile: Dockerfile
@@ -12,15 +12,15 @@ services:
     volumes:
       - .:/var/www/html
     links:
-      - tariffcomparisondb
+      - panda_retail_db
     depends_on:
-      - tariffcomparisondb
+      - panda_retail_db
     networks:
-      - tariffcomparison
+      - panda_retail
 
   # MongoDb database
-  tariffcomparisondb:
-    container_name: tariff-comparison-db
+  panda_retail_db:
+    container_name: panda-retail-db
     logging:
       driver: 'none'
     image: mongo:latest
@@ -28,26 +28,26 @@ services:
     ports:
       - 27040:27040
     volumes:
-      - 'tariff_comparison_data:/data/db'
+      - 'panda_retail_data:/data/db'
     networks:
-      - tariffcomparison
+      - panda_retail
 
   # Server
   nginx:
-    container_name: tariff-comparison-nginx
+    container_name: panda-retail-nginx
     image: nginx:latest
     ports:
       - 80:80
     volumes:
       - ./default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
-      - tariffcomparisonapp
+      - panda_retail_app
     networks:
-      - tariffcomparison
+      - panda_retail
 
 networks:
-  tariffcomparison:
-    name: tariff_comparison_network
+  panda_retail:
+    name: panda_retail_network
 
 volumes:
-   tariff_comparison_data:
+   panda_retail_data:

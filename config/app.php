@@ -194,11 +194,6 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        App\Providers\TariffServiceProvider::class,
-        /*
-         * Application Repository Providers...
-         */
-        App\Providers\TariffRepositoryProvider::class,
     ],
 
     /*
