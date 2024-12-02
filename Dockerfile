@@ -1,5 +1,5 @@
 # Base image
-FROM php:8.1-fpm
+FROM php:8.3-fpm
 
 # Set working directory
 WORKDIR /var/www/html
@@ -26,7 +26,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 COPY . /var/www/html
 
 # Install project dependencies
-RUN composer install --optimize-autoloader --no-scripts --no-interaction
+RUN composer install --optimize-autoloader --no-scripts --no-interaction --ignore-platform-reqs
 
 # Set file permissions
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
