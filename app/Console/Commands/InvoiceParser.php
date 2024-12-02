@@ -2,13 +2,13 @@
 
 namespace App\Console\Commands;
 
-use App\Interfaces\ParserServiceInterface;
+use App\Interfaces\PdfServiceInterface;
 use Illuminate\Console\Command;
 
 final class InvoiceParser extends Command
 {
     public function __construct(
-        private ParserServiceInterface $parserService,
+        private PdfServiceInterface $pdfService,
     ) {
         parent::__construct();
     }
@@ -33,7 +33,7 @@ final class InvoiceParser extends Command
      */
     public function handle()
     {
-        $this->parserService->run();
+        $this->pdfService->generateCSVFromAttachedXml();
         
         return Command::SUCCESS;
     }

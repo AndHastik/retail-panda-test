@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Interfaces\ParserServiceInterface;
-use App\Services\ParserService;
+use App\Interfaces\PdfServiceInterface;
+use App\Services\PdfService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -15,7 +15,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(ParserServiceInterface::class, ParserService::class);
+        $this->app->bind(PdfServiceInterface::class, PdfService::class);
     }
 
     /**
