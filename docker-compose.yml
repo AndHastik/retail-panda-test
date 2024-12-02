@@ -1,0 +1,53 @@
+version: '3.5'
+
+services:
+  # Web app
+  tariffcomparisonapp:
+    container_name: tariff-comparison-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8000:80
+    volumes:
+      - .:/var/www/html
+    links:
+      - tariffcomparisondb
+    depends_on:
+      - tariffcomparisondb
+    networks:
+      - tariffcomparison
+
+  # MongoDb database
+  tariffcomparisondb:
+    container_name: tariff-comparison-db
+    logging:
+      driver: 'none'
+    image: mongo:latest
+    command: mongod --port 27040
+    ports:
+      - 27040:27040
+    volumes:
+      - 'tariff_comparison_data:/data/db'
+    networks:
+      - tariffcomparison
+
+  # Server
+  nginx:
+    container_name: tariff-comparison-nginx
+    image: nginx:latest
+    ports:
+      - 80:80
+    volumes:
+      - ./default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - tariffcomparisonapp
+    networks:
+      - tariffcomparison
+
+networks:
+  tariffcomparison:
+    name: tariff_comparison_network
+
+volumes:
+   tariff_comparison_data:
